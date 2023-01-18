@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "amount": "$9.64",
+    "description": "Drainage of Nasopharynx, Percutaneous Approach, Diagnostic",
+    "cashFlow": true,
+    "date": "2022-02-13",
+    "moneyType": "Rupiah"
+  },
+  {
+    "id": 2,
+    "amount": "$4.70",
+    "description": "Revision of Drainage Device in Pineal Body, Open Approach",
+    "cashFlow": false,
+    "date": "2022-02-21",
+    "moneyType": "Yuan Renminbi"
+  },
+  {
+    "id": 3,
+    "amount": "$3.85",
+    "description": "Removal of Extraluminal Device from Fallopian Tube, Via Natural or Artificial Opening",
+    "cashFlow": false,
+    "date": "2022-01-27",
+    "moneyType": "Dollar"
+  },
+  {
+    "id": 4,
+    "amount": "$3.81",
+    "description": "Insertion of Monitoring Device into Liver, Percutaneous Approach",
+    "cashFlow": false,
+    "date": "2022-06-19",
+    "moneyType": "Rupiah"
+  },
+  {
+    "id": 5,
+    "amount": "$5.69",
+    "description": "Repair Left Sacroiliac Joint, Percutaneous Endoscopic Approach",
+    "cashFlow": true,
+    "date": "2022-09-19",
+    "moneyType": "Krona"
+  },
+  {
+    "id": 6,
+    "amount": "$8.87",
+    "description": "Fluoroscopy of Abdomen and Pelvis",
+    "cashFlow": false,
+    "date": "2022-10-10",
+    "moneyType": "Yuan Renminbi"
+  },
+  {
+    "id": 7,
+    "amount": "$8.35",
+    "description": "Revision of Autologous Tissue Substitute in Face, Open Approach",
+    "cashFlow": false,
+    "date": "2022-07-04",
+    "moneyType": "Rupiah"
+  },
+  {
+    "id": 8,
+    "amount": "$7.35",
+    "description": "Removal of Drainage Device from Left Finger Phalangeal Joint, Percutaneous Endoscopic Approach",
+    "cashFlow": true,
+    "date": "2022-06-18",
+    "moneyType": "Cordoba"
+  },
+  {
+    "id": 9,
+    "amount": "$7.38",
+    "description": "Replacement of Left Ethmoid Bone with Synthetic Substitute, Open Approach",
+    "cashFlow": true,
+    "date": "2022-12-16",
+    "moneyType": "Euro"
+  },
+  {
+    "id": 10,
+    "amount": "$1.62",
+    "description": "Insertion of Spacer into Left Ankle Joint, Open Approach",
+    "cashFlow": true,
+    "date": "2022-12-13",
+    "moneyType": "Sol"
+  },
+  {
+    "id": 11,
+    "amount": "$4.95",
+    "description": "Insertion of Radioactive Element into Tongue, Open Approach",
+    "cashFlow": false,
+    "date": "2022-02-27",
+    "moneyType": "Rupee"
+  },
+  {
+    "id": 12,
+    "amount": "$5.64",
+    "description": "Dilation of Right Posterior Tibial Artery with Four or More Drug-eluting Intraluminal Devices, Open Approach",
+    "cashFlow": true,
+    "date": "2022-11-22",
+    "moneyType": "Sol"
+  },
+  {
+    "id": 13,
+    "amount": "$2.78",
+    "description": "Plaque Radiation of Arm Skin",
+    "cashFlow": false,
+    "date": "2022-03-08",
+    "moneyType": "Peso"
+  },
+  {
+    "id": 14,
+    "amount": "$8.08",
+    "description": "Repair Coccygeal Glomus, Percutaneous Endoscopic Approach",
+    "cashFlow": false,
+    "date": "2022-03-04",
+    "moneyType": "Yuan Renminbi"
+  },
+  {
+    "id": 15,
+    "amount": "$8.70",
+    "description": "Magnetic Resonance Imaging (MRI) of Intracranial Sinuses using Other Contrast",
+    "cashFlow": true,
+    "date": "2022-04-20",
+    "moneyType": "Sol"
+  },
+  {
+    "id": 16,
+    "amount": "$6.22",
+    "description": "Drainage of Trochlear Nerve with Drainage Device, Open Approach",
+    "cashFlow": false,
+    "date": "2022-04-08",
+    "moneyType": "Rial"
+  },
+  {
+    "id": 17,
+    "amount": "$4.78",
+    "description": "Reposition Cervicothoracic Vertebral Joint with Internal Fixation Device, Percutaneous Endoscopic Approach",
+    "cashFlow": true,
+    "date": "2022-12-16",
+    "moneyType": "Yuan Renminbi"
+  },
+  {
+    "id": 18,
+    "amount": "$0.63",
+    "description": "Low Dose Rate (LDR) Brachytherapy of Oropharynx using Palladium 103 (Pd-103)",
+    "cashFlow": true,
+    "date": "2022-10-15",
+    "moneyType": "Euro"
+  },
+  {
+    "id": 19,
+    "amount": "$6.70",
+    "description": "Removal of Synthetic Substitute from Abdominal Wall, External Approach",
+    "cashFlow": true,
+    "date": "2022-06-04",
+    "moneyType": "Cordoba"
+  },
+  {
+    "id": 20,
+    "amount": "$0.32",
+    "description": "Ultrasonography of Abdomen and Pelvis",
+    "cashFlow": true,
+    "date": "2022-10-18",
+    "moneyType": "Yuan Renminbi"
+  },
+  {
+    "id": 21,
+    "amount": "$6.56",
+    "description": "Drainage of Right Ankle Tendon with Drainage Device, Percutaneous Approach",
+    "cashFlow": false,
+    "date": "2022-08-01",
+    "moneyType": "Peso"
+  },
+  {
+    "id": 22,
+    "amount": "$4.46",
+    "description": "Release Right Scapula, Percutaneous Endoscopic Approach",
+    "cashFlow": false,
+    "date": "2022-07-27",
+    "moneyType": "Rupiah"
+  },
+  {
+    "id": 23,
+    "amount": "$9.83",
+    "description": "Bypass Right External Iliac Artery to Lower Extremity Artery with Autologous Arterial Tissue, Open Approach",
+    "cashFlow": true,
+    "date": "2022-12-26",
+    "moneyType": "Peso"
+  },
+  {
+    "id": 24,
+    "amount": "$4.88",
+    "description": "Destruction of Pons, Open Approach",
+    "cashFlow": true,
+    "date": "2022-04-22",
+    "moneyType": "Euro"
+  },
+  {
+    "id": 25,
+    "amount": "$3.75",
+    "description": "Drainage of Appendix, Percutaneous Endoscopic Approach",
+    "cashFlow": true,
+    "date": "2022-08-13",
+    "moneyType": "Yuan Renminbi"
+  },
+  {
+    "id": 26,
+    "amount": "$7.37",
+    "description": "Extirpation of Matter from Middle Esophagus, Percutaneous Approach",
+    "cashFlow": true,
+    "date": "2022-05-17",
+    "moneyType": "Yuan Renminbi"
+  },
+  {
+    "id": 27,
+    "amount": "$6.60",
+    "description": "Destruction of Right Shoulder Tendon, Percutaneous Endoscopic Approach",
+    "cashFlow": true,
+    "date": "2022-03-20",
+    "moneyType": "Rupiah"
+  },
+  {
+    "id": 28,
+    "amount": "$9.64",
+    "description": "Removal of Drainage Device from Upper Extremity Subcutaneous Tissue and Fascia, Percutaneous Approach",
+    "cashFlow": false,
+    "date": "2022-10-10",
+    "moneyType": "Ouguiya"
+  },
+  {
+    "id": 29,
+    "amount": "$0.73",
+    "description": "Drainage of Left Ulnar Artery, Percutaneous Endoscopic Approach",
+    "cashFlow": false,
+    "date": "2022-07-20",
+    "moneyType": "Dollar"
+  },
+  {
+    "id": 30,
+    "amount": "$0.01",
+    "description": "Change Splint on Right Finger",
+    "cashFlow": true,
+    "date": "2022-06-14",
+    "moneyType": "Ruble"
+  }
+]
