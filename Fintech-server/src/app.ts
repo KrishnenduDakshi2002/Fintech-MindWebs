@@ -4,6 +4,9 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 import helmet from 'helmet';
+import connect from './DB/db';
+import { router } from './router';
+
 const app = express();
 
 
@@ -13,13 +16,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(helmet());
-
-app.get('/',(req,res)=>{
-    res.send(200);
-})
+app.use('/api',router);
 
 app.listen(3000,()=>{
-
     console.log(`server running at http://localhost:${3000}`);
+    connect();
 
 });
