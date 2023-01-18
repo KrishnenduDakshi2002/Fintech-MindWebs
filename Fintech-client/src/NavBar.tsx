@@ -1,11 +1,21 @@
-import React from "react";
-import { Link,useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Link,Navigate,useLocation } from "react-router-dom";
 import Logo from './assets/logo.png'
 const NavBar = () => {
 
     const path = useLocation().pathname.split('/')[2];
-    console.log(path);
-  return (
+    const [authToken, setauthToken] = useState(localStorage.getItem('authToken'))
+
+    function logout(){
+      localStorage.removeItem('authToken');
+      setauthToken(null);
+    }
+
+    if(authToken == null)
+    {
+      return <Navigate to={'/login'}/>
+    }
+    return (
     <div className="h-full flex items-center justify-between">
       <div className="h-full flex items-center">
         <div className=" ml-10">
@@ -17,8 +27,9 @@ const NavBar = () => {
         </div>
       </div>
       <div className="h-full flex items-center">
-        <NavButton title="Login" path="/user/dashboard"/>
-        <NavButton title="Sign Up" path="/user/visualize"/>
+        <button onClick={logout} className="bg-red-400 py-2 px-5 rounded-xl mr-5 text-md hover:scale-105">
+          Log out
+        </button>
       </div>
     </div>
   );
