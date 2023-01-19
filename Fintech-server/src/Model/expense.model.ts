@@ -4,7 +4,7 @@ export interface ExpenseInterface{
     _id: mongoose.Types.ObjectId;
     userid: mongoose.Types.ObjectId;
     description: string,
-    date: string,
+    date: Date,
     amount: number,
     cashFlow: string,
     moneyType: string,
