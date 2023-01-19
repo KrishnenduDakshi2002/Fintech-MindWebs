@@ -1,42 +1,104 @@
 import React, { memo, useEffect, useState } from "react";
-import Expenses from "../Data/EXPENSES_FILTERED.json";
 import { FaRupeeSign } from "react-icons/fa";
 import { BiDollar } from "react-icons/bi";
 import dayjs from "dayjs";
 import LocalizedFormat from 'dayjs/plugin/localizedFormat'
+import axios from "axios";
 dayjs.extend(LocalizedFormat)
+import {HOST} from '../Host';
+
+export interface ExpenseInterface{
+  _id: string;
+  description: string,
+  date: string,
+  amount: string,
+  cashFlow: string,
+  moneyType: string,
+  createdAt: string;
+  updatedAt : string;
+}
 
 
-const Filters = ["All", "1 Day", "2 Days", "3 Days", "5 Days", "1 Week"];
+
+const Filters = ["Recent", "1 Day", "2 Days", "3 Days", "4 Days", "1 Week"];
 const ExpenseListWrapper = () => {
+  const [SearchFilterPeriod, setSearchFilterPeriod] = useState("recent");
+  const [SearchFilterNumber, setSearchFilterNumber] = useState("0");
+  const Expenses = useGetExpense(SearchFilterPeriod,SearchFilterNumber);
   return (
     <div className="w-full h-full rounded-xl overflow-hidden grid grid-rows-[3rem_1fr] bg-white px-4 py-2">
       <div className="grid grid-flow-col overflow-x-scroll scrollbar-hidden py-2">
         {Filters.map((filter, i) => {
           return (
-            <button key={i} className="rounded-md bg-blue-300 mx-1 px-3">
+            <button key={i} onClick={()=>{
+              if(i == 0) setSearchFilterPeriod('recent');
+              else if(i > 0 && i <=4 ){
+                setSearchFilterPeriod('day');
+                setSearchFilterNumber(i.toString());
+              }
+              else if(i === 5){
+                setSearchFilterPeriod('week');
+                setSearchFilterNumber('1');
+              }
+            }} className="rounded-md bg-blue-300 mx-1 px-3">
               <p className="whitespace-nowrap">{filter}</p>
             </button>
           );
         })}
       </div>
-      <ExpenseList/>
+      {
+        Expenses != undefined && 
+        <ExpenseList Expenses={Expenses}/>
+      }
     </div>
   );
 };
 
-const ExpenseList = memo(() => {
+function useGetExpense(SearchFilterPeriod : string, SearchFilterNumber: string){
+  const [expenses, setExpenses] = useState<Array<ExpenseInterface>>();
+  useEffect(() => {
+    if(SearchFilterPeriod === 'recent'){
+      axios.get(`${HOST}/get/expense?p=recent`,{
+        headers : {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+      }).then(res => {
+        setExpenses(res.data);
+      }).catch(e=> {
+        console.log(e);
+        window.alert('ERR : Error while getting expenses')
+      });
+    }else{
+      axios.get(`${HOST}/get/expense?p=${SearchFilterPeriod}&n=${SearchFilterNumber}`,
+      {
+        headers : {
+          'Authorization': `Bearer ${localStorage.getItem('authToken')}`
+        }
+      }
+      ).then(res => {
+        setExpenses(res.data);
+      }).catch(e=>{
+        console.log(e);
+        window.alert('ERR : Error while getting expenses')
+      })
+    }
+  }, [SearchFilterNumber,SearchFilterPeriod])
+  return expenses;
+}
+
+const ExpenseList = memo(({Expenses}:{Expenses: Array<ExpenseInterface>}) => {
   return (
     <div className="grid-flow-row overflow-y-scroll gap-y-1 max-h-[40rem]">
-      {Expenses.map((expense) => (
-        <ExpenseTile {...expense} />
+      {Expenses.map((expense,i) => (
+        <ExpenseTile key={i} {...expense} />
       ))}
     </div>
   );
 });
 
-interface ExpenseTileInterface {
-  id: string | number;
+interface ExpenseTileInterface{
+  key: string | number;
+  _id: string;
   amount: string;
   description: string;
   cashFlow: string;
@@ -44,7 +106,7 @@ interface ExpenseTileInterface {
   moneyType: string;
 }
 export function ExpenseTile({
-  id,
+  _id,
   amount,
   description,
   date,
@@ -54,12 +116,12 @@ export function ExpenseTile({
   const [ExpandTile, setExpandTile] = useState(false);
   return (
     <div
+      key={_id}
       className={`relative ${
         ExpandTile ? "border border-gray-300 rounded-2xl" : ""
       } overflow-hidden`}
     >
       <div
-        key={id}
         className=" grid grid-cols-[4rem_3fr_auto] cursor-pointer py-2 relative z-10"
         onClick={() => setExpandTile((prev) => !prev)}
       >

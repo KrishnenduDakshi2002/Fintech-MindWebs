@@ -23,6 +23,8 @@ const data = Expenses.map(e=>{
     const money_rand = getRandom(2) // 0,1,2
     const cashflow_rand = getRandom(2) // 0,1
 
+
+
     return {
         ...e,
         amount: newAmount.toFixed(2),
@@ -33,4 +35,4 @@ const data = Expenses.map(e=>{
 
 })
 
-WriteToFile('./EXPENSES_FILTERED.json',data);
+WriteToFile('./EXPENSES.json',data);
