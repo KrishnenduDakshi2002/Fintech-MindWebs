@@ -29,7 +29,8 @@ export default function Visualize() {
   return (
     <div className="bg-gray-200 h-full grid grid-cols-[1fr_3fr]">
       <div className=" pl-5 pr-2 py-2">
-        <div className="bg-yellow-300 rounded-xl h-full">dsaf</div>
+        <div className="bg-yellow-300 rounded-xl h-full p-3 overflow-auto">
+        </div>
       </div>
       <div className="pr-5 py-2">
         <div className="bg-white rounded-xl h-full grid grid-rows-[4rem_1fr]">

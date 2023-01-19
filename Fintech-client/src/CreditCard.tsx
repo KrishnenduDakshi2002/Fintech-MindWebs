@@ -4,17 +4,23 @@ const Card = ({
   isActive,
   isCredit,
   userName,
-  onClick
+  onClick,
 }: {
-  isActive:boolean
+  isActive: boolean;
   isCredit: boolean;
   userName: string;
-  onClick:(val:string)=>void;
+  onClick: (val: string) => void;
 }) => {
   return (
-    <button onClick={()=>onClick(`${isCredit ? 'credit':'debit'}`)} className={`${isActive ? 'border-2':''} border-blue-600 hover:scale-105 ease-in-out duration-150 rounded-2xl overflow-hidden p-1`}>
+    <button
+      onClick={() => onClick(`${isCredit ? "credit" : "debit"}`)}
+      className={`${
+        isActive ? "border-2" : ""
+      } border-blue-600 2xl:hover:scale-105 xl:hover:scale-[1.01] ease-in-out duration-150 rounded-2xl overflow-hidden p-1 mx-1
+      `}
+    >
       <div
-        className={`w-[20rem] h-[12rem] ${
+        className={` 2xl:h-[12rem] h-[11rem] px-5 ${
           isCredit
             ? "bg-gradient-to-tr from-purple-600 to-pink-600"
             : "bg-gradient-to-tr from-blue-600 to-blue-400"
@@ -34,15 +40,15 @@ const Card = ({
         <Text text="0123" />
         <Text text="0123" />
         <Text text="0123" />
-        <div className="col-span-2 flex-center-center">{userName}</div>
-        <div className="col-span-2 flex-center-center">01/23</div>
+        <div className="col-span-3 flex-center-center 2xl:text-[0.9rem] xl:text-[0.9rem] pr-16">{userName}</div>
+        <div className="col-span-1 flex-center-center 2xl:text-[1rem] xl:text-[0.9rem]">01/23</div>
       </div>
     </button>
   );
 };
 
 const Text = ({ text }: { text: string }) => {
-  return <p className=" text-xl flex-center-center">{text}</p>;
+  return <p className=" 2xl:text-xl xl:text-[1.1rem] xl:px-2 flex-center-center">{text}</p>;
 };
 
 export default Card;

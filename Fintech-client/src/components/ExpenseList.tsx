@@ -26,7 +26,7 @@ const ExpenseListWrapper = () => {
   const [SearchFilterNumber, setSearchFilterNumber] = useState("0");
   const Expenses = useGetExpense(SearchFilterPeriod,SearchFilterNumber);
   return (
-    <div className="w-full h-full rounded-xl overflow-hidden grid grid-rows-[3rem_1fr] bg-white px-4 py-2">
+    <div className="w-full h-full rounded-xl grid grid-rows-[3rem_1fr] bg-white px-4 py-2">
       <div className="grid grid-flow-col overflow-x-scroll scrollbar-hidden py-2">
         {Filters.map((filter, i) => {
           return (
@@ -46,10 +46,12 @@ const ExpenseListWrapper = () => {
           );
         })}
       </div>
-      {
-        Expenses != undefined && 
-        <ExpenseList Expenses={Expenses}/>
-      }
+      <div className="overflow-auto">
+        {
+          Expenses != undefined && 
+          <ExpenseList Expenses={Expenses}/>
+        }
+      </div>
     </div>
   );
 };
@@ -89,7 +91,7 @@ function useGetExpense(SearchFilterPeriod : string, SearchFilterNumber: string){
 
 const ExpenseList = memo(({Expenses}:{Expenses: Array<ExpenseInterface>}) => {
   return (
-    <div className="grid-flow-row overflow-y-scroll gap-y-1 max-h-[40rem]">
+    <div className="grid-flow-row overflow-y-scroll gap-y-1">
       {Expenses.map((expense,i) => (
         <ExpenseTile key={i} {...expense} />
       ))}
