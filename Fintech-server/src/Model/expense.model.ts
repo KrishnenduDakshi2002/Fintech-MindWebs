@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 export interface ExpenseInterface{
     _id: mongoose.Types.ObjectId;
+    userid: mongoose.Types.ObjectId;
     description: string,
     date: string,
     amount: number,
@@ -12,6 +13,10 @@ export interface ExpenseInterface{
 }
 
 const ExpenseSchema = new mongoose.Schema({
+    userid : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref :'user'
+    },
     description: String,
     date: Date,
     amount: Number,

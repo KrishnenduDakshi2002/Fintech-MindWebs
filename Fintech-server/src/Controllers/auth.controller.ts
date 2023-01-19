@@ -13,6 +13,18 @@ import {
 // model
 import {UserModel} from "../Model/auth.model";
 import { LoginValidation, SignUpValidation } from "../Validation/auth.validation";
+import mongoose from "mongoose";
+
+
+export async function getUserName(req:Request,res:Response) {
+    try {
+      const id = new mongoose.Types.ObjectId(req.body.UserId);
+      const user = await UserModel.findById(id).select('name');
+      messageCustom(res,OK,'user',user);
+    } catch (error) {
+       messageError(res,SERVER_ERROR,"server error",error);
+    }
+}
 
 //validation
 
