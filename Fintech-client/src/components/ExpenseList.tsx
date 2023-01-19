@@ -56,6 +56,7 @@ const ExpenseListWrapper = () => {
 
 function useGetExpense(SearchFilterPeriod : string, SearchFilterNumber: string){
   const [expenses, setExpenses] = useState<Array<ExpenseInterface>>();
+  // console.log('get expenselist useeffect');
   useEffect(() => {
     if(SearchFilterPeriod === 'recent'){
       axios.get(`${HOST}/get/expense?p=recent`,{
