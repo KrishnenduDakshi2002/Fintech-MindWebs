@@ -18,10 +18,10 @@ const Home = () => {
 
   const UserName = useGetUserData();
   return (
-    <div className="bg-gray-200 h-full grid xl:grid-cols-[3fr_2fr] grid-cols-2 grid-rows-[1fr_4fr] pl-6">
+    <div className="bg-gray-200 h-full grid xl:grid-cols-[3fr_2fr] md:grid-cols-2 md:grid-rows-[1fr_4fr] grid-cols-1 grid-rows-[6 prem_20rem_1fr] gap-2 p-3">
       {/* child-1 */}
-      <div className="flex-center-center">
-        <div className="bg-white rounded-xl h-[90%] w-full grid grid-cols-3">
+      <div className="flex-center-center ">
+        <div className="bg-white rounded-xl h-full w-full grid grid-cols-3">
           <div className="flex justify-center flex-col p-5">
             <p className="2xl:text-[1.3rem] xl:text-[1.25rem]">Hi!</p>
             <p className="2xl:text-[1.5rem] xl:text-[1.25rem]">{UserName}</p>
@@ -45,13 +45,13 @@ const Home = () => {
         </div>
       </div>
       {/* child-2 */}
-      <div className=" row-span-2 pb-5 pt-2 px-5 h-full overflow-auto">
+      <div className=" row-span-2 h-full overflow-auto">
         <ExpenseListWrapper />
       </div>
       {/* child-3 */}
-      <div className="bg-white rounded-xl 2xl:px-10 px-5 py-5 mb-5 grid xl:grid-rows-[15rem_4rem_4rem_5rem] 
-      grid-rows-[12rem_12rem_repeat(4,4rem)] xl:grid-cols-2 
-      grid-cols-1 overflow-y-scroll relative overflow-auto">
+      <div className="bg-white rounded-xl 2xl:px-10 px-5 py-5 grid xl:grid-rows-[15rem_4rem_4rem_5rem] 
+      grid-rows-[12rem_12rem_repeat(4,4rem)] xl:grid-cols-2 gap-x-2
+      grid-cols-1 overflow-y-scroll relative overflow-auto scrollbar-hidden">
         <div className="flex-center-center">
           <Card
             isActive={cashFlow === "credit" ? true : false}
@@ -107,7 +107,7 @@ const Home = () => {
         <div className="flex items-center justify-start">
           <input
             type="date"
-            className="h-[3rem] w-full rounded-xl ml-4 px-4 border border-gray-700 hover:border-blue-800 outline-none"
+            className="h-[3rem] w-full rounded-xl px-4 border border-gray-700 hover:border-blue-800 outline-none"
             placeholder="Date"
             onChange={(e) => setDate(new Date(e.target.value))}
           />
@@ -120,7 +120,7 @@ const Home = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-        <div className="flex justify-end items-center">
+        <div className="xl:col-start-2 flex justify-end items-center">
           <button
             onClick={() =>
               AddExpense(description, date, amount, cashFlow, currency)

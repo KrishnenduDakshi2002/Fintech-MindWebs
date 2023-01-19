@@ -125,15 +125,15 @@ export function ExpenseTile({
       } overflow-hidden`}
     >
       <div
-        className=" grid grid-cols-[4rem_3fr_auto] cursor-pointer py-2 relative z-10"
+        className=" grid lg:grid-cols-[4rem_3fr_auto] grid-cols-[3fr_auto] cursor-pointer py-2 relative z-10"
         onClick={() => setExpandTile((prev) => !prev)}
       >
-        <div className="flex-center-center">
-          <div className="rounded-full bg-violet-400 p-6"></div>
+        <div className="lg:flex hidden justify-center items-center">
+          <div className="rounded-full bg-violet-400 p-5"></div>
         </div>
         <p className="text-overflow px-2 text-sm">{description}</p>
         <p
-          className={`flex-center-center px-4 text-xl font-semibold ${
+          className={`flex-center-center px-4 lg:text-xl text-md font-semibold ${
             cashFlow === "debit" ? "text-red-700" : "text-green-700"
           }`}
         >
