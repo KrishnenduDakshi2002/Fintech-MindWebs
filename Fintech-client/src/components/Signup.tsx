@@ -7,6 +7,7 @@ function SignUp() {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [initialBalance, setInitialBalance] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
     function SignUp(){
@@ -14,7 +15,8 @@ function SignUp() {
         axios.post(`${HOST}/signup`,{
             name,
             email,
-            password
+            password,
+            balance: initialBalance,
         }).then(response=>{
             if(response.status === 201){
                 setIsLoading(false);
@@ -29,11 +31,17 @@ function SignUp() {
     return (
       <div className="max-w-[30rem] lg:h-[70%] h-[80%] min-h-[30rem] rounded-2xl bg-white shadow-gray-500 shadow-2xl  grid grid-rows-[3rem_1fr] py-10">
         <h1 className="text-[1.8rem] mx-5">FinTech - Your Finance Tracker</h1>
-        <div className="grid grid-rows-[1fr_1fr_1fr_2.5fr] mx-10 pt-5">
+        <div className="grid grid-rows-[1fr_1fr_1fr_1fr_2.5fr] mx-10 pt-5">
           <div className="w-full">
             <InputElement
               placeholder="Enter Your Name"
               onChangeValue={(e) => setName(e)}
+            />
+          </div>
+          <div className="w-full">
+            <InputElement
+              placeholder="Enter Initial Balance"
+              onChangeValue={(e) => setInitialBalance(e)}
             />
           </div>
           <div className="w-full">

@@ -3,6 +3,7 @@ import LinePlot from "../components/LinePlot";
 import axios from "axios";
 import { HOST } from "../Host";
 import { Footer } from "../components/Footer";
+import useVerfiyUser from "../CustomHooks/GetverifiedUser";
 
 const MONTH = [
   "January",
@@ -24,6 +25,9 @@ export default function Visualize() {
   const [SelectedMonth, setSelectedMonth] = useState(new Date().getMonth());
   const [SelectedYear, setSelectedYear] = useState(new Date().getFullYear());
 
+  // this custom hook will verify whether user authorized or not
+  // on tha basis it will navigate to login
+  useVerfiyUser();
   const AnalysisData = useGetExpenseAnalyzeData(SelectedMonth, SelectedYear);
   const [Months, Years] = useGetActiveExpenseSession();
 
@@ -120,7 +124,7 @@ function useGetActiveExpenseSession() {
         setYears(res.data.year);
       })
       .catch((e) => {
-        window.alert("ERR : error while getting data");
+        // window.alert("ERR : error while getting data");
         console.log(e);
       });
   }, []);
@@ -145,11 +149,10 @@ function useGetExpenseAnalyzeData(month: number, year: number) {
           },
         })
         .then((res) => {
-          console.log(res);
           setData(res.data.data);
         })
         .catch((e) => {
-          window.alert("ERR : error while getting data");
+          // window.alert("ERR : error while getting data");
           console.log(e);
         });
     }, 1500);
