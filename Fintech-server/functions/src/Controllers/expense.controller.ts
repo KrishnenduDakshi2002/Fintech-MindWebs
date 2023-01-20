@@ -10,6 +10,7 @@ import { ExpenseValidator } from "../Validation/expense.validation";
 import { ExpenseModel } from "../Model/expense.model";
 import { UserModel } from "../Model/auth.model";
 import mongoose from "mongoose";
+import dayjs from "dayjs";
 
 const MONTH = [
   "January",
@@ -186,7 +187,6 @@ export async function getAnalysisOfExpensesByWeek(req: Request, res: Response) {
 
     let FilteredResult = [];
     while (EndDateOfWeek <= EndOfMonth) {
-        console.log(StartDateOfWeek,EndDateOfWeek);
       const expenses = await ExpenseModel.find({
         $and: [
           { date: { $gte: StartDateOfWeek.toISOString() } },
@@ -214,15 +214,15 @@ export async function getAnalysisOfExpensesByWeek(req: Request, res: Response) {
     let Result:any[] = [];
     FilteredResult.map((week,index) =>{
         let TotalDebit = 0;
-        let TotalCrebit = 0;
+        let TotalCredit = 0;
         week.map(expense=>{
             if(expense.cashFlow === 'debit') TotalDebit += expense.amount;
-            else if(expense.cashFlow === 'credit') TotalCrebit += expense.amount;
+            else if(expense.cashFlow === 'credit') TotalCredit += expense.amount;
         });
-        if(userCurrentBalance != undefined) userCurrentBalance = userCurrentBalance + (TotalCrebit - TotalDebit);
+        if(userCurrentBalance != undefined) userCurrentBalance = userCurrentBalance + (TotalCredit - TotalDebit);
         Result.push({
                 TotalDebit : TotalDebit.toFixed(2),
-                TotalCrebit : TotalCrebit.toFixed(2),
+                TotalCredit : TotalCredit.toFixed(2),
                 CurrentBalance : userdata?.balance.toFixed(2)
         })
     })
@@ -234,5 +234,69 @@ export async function getAnalysisOfExpensesByWeek(req: Request, res: Response) {
     });
   } catch (error) {
     messageError(res, SERVER_ERROR, "server error", error);
+  }
+}
+
+
+export async function getMAB(req:Request,res:Response) {
+  try {
+    const year = req.query.y as string;
+    const month = req.query.m as string;
+    const CurrentDate = new Date();
+    const StartOfMonth = new Date(+year,+month,1);
+    const NoOfDates = new Date(+year,+month+1,0).getDate();
+    const StartDateOfNextMonth = new Date(+year,+month+1,1);
+    const userId = new mongoose.Types.ObjectId(req.body.UserId);
+    // getting all the document for that month and year
+    const expenses = await ExpenseModel.find({
+      $and:[
+        {
+          date : { $gt : StartOfMonth.toISOString()}
+        },
+        {
+          date: {$lt : StartDateOfNextMonth.toISOString()}
+        },
+        {
+          userid: userId
+        }
+      ]
+    });
+
+    let DatePointer = new Date(+year,+month,1);
+    // time complexity : (no.of date in that month) * (total no. of expenses in month)
+    // O(n)
+    let TotalCashOfMonth=0;
+    let results:any[]=[];
+    let ClosingBalance = 0;
+    let OpeningBalance = 0;
+    Array.from({length: NoOfDates }).map((v,i)=>{
+      let TotalDebit = 0;
+      let TotalCredit = 0;
+      expenses.map(expense=>{
+        if(dayjs(expense.date).isSame(dayjs(DatePointer),'day'))
+        {
+          if(expense.cashFlow === 'debit') TotalDebit += expense.amount;
+          else if(expense.cashFlow === 'credit') TotalCredit += expense.amount;
+        }
+      })
+
+      TotalCashOfMonth += +(TotalCredit - TotalDebit).toFixed(2)
+      OpeningBalance += TotalCredit - TotalDebit;
+      ClosingBalance += OpeningBalance;
+      results.push({
+        TotalCredit,
+        TotalDebit,
+        OpeningBalance : OpeningBalance
+      })
+      DatePointer = new Date(+year,+month,i+2)
+    })
+
+    messageCustom(res,OK,'Monthly Average Balance',{
+      MAB: ClosingBalance/NoOfDates,
+      results,
+      NoOfDates
+    });
+  } catch (error) {
+    messageError(res,SERVER_ERROR,'server error',error);
   }
 }

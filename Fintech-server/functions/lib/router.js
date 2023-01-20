@@ -45,4 +45,5 @@ router.get('/get/expense', [verifytoken_1.default], expense_controller_1.getExpe
 router.get('/get/expense/month', [verifytoken_1.default], expense_controller_1.getExpenseByMonth);
 router.get('/get/expense/analysis', [verifytoken_1.default], expense_controller_1.getAnalysisOfExpensesByWeek);
 router.get('/get/expense/active', [verifytoken_1.default], expense_controller_1.getExpensesActiveSession);
+router.get('/get/expense/mab', expense_controller_1.getMAB);
 //# sourceMappingURL=router.js.map

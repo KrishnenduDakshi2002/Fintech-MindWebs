@@ -3,13 +3,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAnalysisOfExpensesByWeek = exports.getExpensesActiveSession = exports.getExpenseByMonth = exports.getExpenses = exports.addExpense = void 0;
+exports.getMAB = exports.getAnalysisOfExpensesByWeek = exports.getExpensesActiveSession = exports.getExpenseByMonth = exports.getExpenses = exports.addExpense = void 0;
 const message_1 = require("../helpers/message");
 const messageTypes_1 = require("../helpers/messageTypes");
 const expense_validation_1 = require("../Validation/expense.validation");
 const expense_model_1 = require("../Model/expense.model");
 const auth_model_1 = require("../Model/auth.model");
 const mongoose_1 = __importDefault(require("mongoose"));
+const dayjs_1 = __importDefault(require("dayjs"));
 const MONTH = [
     "January",
     "February",
@@ -165,7 +166,6 @@ async function getAnalysisOfExpensesByWeek(req, res) {
         let isEndOfMonth = false;
         let FilteredResult = [];
         while (EndDateOfWeek <= EndOfMonth) {
-            console.log(StartDateOfWeek, EndDateOfWeek);
             const expenses = await expense_model_1.ExpenseModel.find({
                 $and: [
                     { date: { $gte: StartDateOfWeek.toISOString() } },
@@ -189,18 +189,18 @@ async function getAnalysisOfExpensesByWeek(req, res) {
         let Result = [];
         FilteredResult.map((week, index) => {
             let TotalDebit = 0;
-            let TotalCrebit = 0;
+            let TotalCredit = 0;
             week.map(expense => {
                 if (expense.cashFlow === 'debit')
                     TotalDebit += expense.amount;
                 else if (expense.cashFlow === 'credit')
-                    TotalCrebit += expense.amount;
+                    TotalCredit += expense.amount;
             });
             if (userCurrentBalance != undefined)
-                userCurrentBalance = userCurrentBalance + (TotalCrebit - TotalDebit);
+                userCurrentBalance = userCurrentBalance + (TotalCredit - TotalDebit);
             Result.push({
                 TotalDebit: TotalDebit.toFixed(2),
-                TotalCrebit: TotalCrebit.toFixed(2),
+                TotalCredit: TotalCredit.toFixed(2),
                 CurrentBalance: userdata === null || userdata === void 0 ? void 0 : userdata.balance.toFixed(2)
             });
         });
@@ -215,4 +215,62 @@ async function getAnalysisOfExpensesByWeek(req, res) {
     }
 }
 exports.getAnalysisOfExpensesByWeek = getAnalysisOfExpensesByWeek;
+async function getMAB(req, res) {
+    try {
+        const year = req.query.y;
+        const month = req.query.m;
+        const CurrentDate = new Date();
+        const StartOfMonth = new Date(+year, +month, 1);
+        const NoOfDates = new Date(+year, +month + 1, 0).getDate();
+        const StartDateOfNextMonth = new Date(+year, +month + 1, 1);
+        // getting all the document for that month and year
+        const expenses = await expense_model_1.ExpenseModel.find({
+            $and: [
+                {
+                    date: { $gt: StartOfMonth.toISOString() }
+                },
+                {
+                    date: { $lt: StartDateOfNextMonth.toISOString() }
+                }
+            ]
+        });
+        let DatePointer = new Date(+year, +month, 1);
+        // time complexity : (no.of date in that month) * (total no. of expenses in month)
+        // O(n)
+        let TotalCashOfMonth = 0;
+        let results = [];
+        let ClosingBalance = 0;
+        let OpeningBalance = 0;
+        Array.from({ length: NoOfDates }).map((v, i) => {
+            let TotalDebit = 0;
+            let TotalCredit = 0;
+            expenses.map(expense => {
+                if ((0, dayjs_1.default)(expense.date).isSame((0, dayjs_1.default)(DatePointer), 'day')) {
+                    if (expense.cashFlow === 'debit')
+                        TotalDebit += expense.amount;
+                    else if (expense.cashFlow === 'credit')
+                        TotalCredit += expense.amount;
+                }
+            });
+            TotalCashOfMonth += +(TotalCredit - TotalDebit).toFixed(2);
+            OpeningBalance += TotalCredit - TotalDebit;
+            ClosingBalance += OpeningBalance;
+            results.push({
+                TotalCredit,
+                TotalDebit,
+                OpeningBalance: OpeningBalance
+            });
+            DatePointer = new Date(+year, +month, i + 2);
+        });
+        (0, message_1.messageCustom)(res, messageTypes_1.OK, 'Monthly Average Balance', {
+            MAB: ClosingBalance / NoOfDates,
+            results,
+            NoOfDates
+        });
+    }
+    catch (error) {
+        (0, message_1.messageError)(res, messageTypes_1.SERVER_ERROR, 'server error', error);
+    }
+}
+exports.getMAB = getMAB;
 //# sourceMappingURL=expense.controller.js.map

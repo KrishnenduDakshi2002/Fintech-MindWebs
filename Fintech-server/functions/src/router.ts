@@ -2,7 +2,7 @@ import { Request } from "express";
 import * as express from 'express';
 import { LoginController, SignUpController, getUserDetail, verifyToken } from "./Controllers/auth.controller";
 import UserAuthentication from "./middleware/verifytoken";
-import { addExpense, getAnalysisOfExpensesByWeek, getExpenseByMonth, getExpenses, getExpensesActiveSession } from "./Controllers/expense.controller";
+import { addExpense, getAnalysisOfExpensesByWeek, getExpenseByMonth, getExpenses, getExpensesActiveSession, getMAB } from "./Controllers/expense.controller";
 const router = express.Router();
 
 router.get('/',(req:Request,res:express.Response)=>{
@@ -18,5 +18,6 @@ router.get('/get/expense',[UserAuthentication],getExpenses);
 router.get('/get/expense/month',[UserAuthentication],getExpenseByMonth);
 router.get('/get/expense/analysis',[UserAuthentication],getAnalysisOfExpensesByWeek);
 router.get('/get/expense/active',[UserAuthentication],getExpensesActiveSession);
+router.get('/get/expense/mab',[UserAuthentication],getMAB);
 export {router};
 
