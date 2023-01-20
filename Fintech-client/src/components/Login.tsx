@@ -43,8 +43,8 @@ function Login() {
             <p className="text-[1.2rem] text-blue-800 font-bold">Login</p>
           </button>
           <button className="border-2 border-blue-600 py-2 px-10 w-[90%] rounded-2xl hover:bg-blue-400 hover:border-transparent">
-            <Link to="/signup">
-              <p className="text-[1.2rem] text-blue-800 font-bold">Create an account</p>
+            <Link to="/">
+              <p className="text-[1.2rem] text-blue-800 font-bold">Back</p>
             </Link>
           </button>
         </div>
