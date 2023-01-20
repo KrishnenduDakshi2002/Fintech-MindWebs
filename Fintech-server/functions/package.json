@@ -1,14 +1,21 @@
 {
-  "name": "aagman",
-  "version": "1.0.0",
-  "description": "this is the backend node app for aagman ",
-  "main": "app.ts",
+  "name": "functions",
   "scripts": {
-    "start": "nodemon --config nodemon.json src/app.ts"
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
   },
-  "author": "Krishnendu Dakshi",
-  "license": "ISC",
+  "engines": {
+    "node": "16"
+  },
+  "main": "lib/index.js",
   "dependencies": {
+    "firebase-admin": "^10.2.0",
+    "firebase-functions": "^3.21.0",
     "bcrypt": "^5.1.0",
     "config": "^3.3.8",
     "cookie-parser": "^1.4.6",
@@ -17,13 +24,13 @@
     "dotenv": "^16.0.2",
     "express": "^4.18.1",
     "helmet": "^6.0.0",
-    "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.1",
     "sanitize-html": "^2.7.2",
     "zod": "^3.20.2"
   },
   "devDependencies": {
+    "typescript": "^4.6.4",
     "@types/bcrypt": "^5.0.0",
     "@types/config": "^3.3.0",
     "@types/cookie-parser": "^1.4.3",
@@ -33,7 +40,7 @@
     "@types/mongoose": "^5.11.97",
     "@types/node": "^18.7.18",
     "@types/sanitize-html": "^2.6.2",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.8.3"
-  }
+    "ts-node": "^10.9.1"
+  },
+  "private": true
 }

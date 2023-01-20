@@ -1,5 +1,5 @@
 import express from 'express';
-import config from 'config';
+// import config from 'config';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
@@ -23,3 +23,5 @@ app.listen(3000,()=>{
     connect();
 
 });
+
+export default app;

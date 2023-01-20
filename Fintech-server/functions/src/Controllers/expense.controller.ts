@@ -9,9 +9,7 @@ import {
 import { ExpenseValidator } from "../Validation/expense.validation";
 import { ExpenseModel } from "../Model/expense.model";
 import { UserModel } from "../Model/auth.model";
-import mongoose, { mongo } from "mongoose";
-import dayjs from "dayjs";
-import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
+import mongoose from "mongoose";
 
 const MONTH = [
   "January",
