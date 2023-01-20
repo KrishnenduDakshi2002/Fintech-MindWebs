@@ -5,6 +5,7 @@ interface UserModelInterface{
     _id: mongoose.Types.ObjectId;
     name:string;
     email: string;
+    balance: number;
     password: string;
     createdAt: Date;
     updatedAt: Date;
@@ -13,7 +14,8 @@ interface UserModelInterface{
 const UserSchema = new mongoose.Schema({
     name: String,
     email: String,
-    password: String
+    password: String,
+    balance: Number
 },{
     timestamps : true
 })

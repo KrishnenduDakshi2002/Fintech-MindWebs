@@ -9,7 +9,7 @@ import {
 import { ExpenseValidator } from "../Validation/expense.validation";
 import { ExpenseModel } from "../Model/expense.model";
 import { UserModel } from "../Model/auth.model";
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 import dayjs from "dayjs";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 
@@ -46,6 +46,12 @@ export async function addExpense(req: Request, res: Response) {
       date: new Date(ValidatedExpense.data.date),
       userid: id,
     }).save();
+    const increment = ( ValidatedExpense.data.cashFlow === 'credit' ? +ValidatedExpense.data.amount : 0-(+ValidatedExpense.data.amount))
+    const updatedres = await UserModel.findByIdAndUpdate(id,{
+        $inc : {
+            balance : increment
+        }
+    });
 
     return messageCustom(
       res,
@@ -70,9 +76,10 @@ export async function getExpenses(req: Request, res: Response) {
     const period = (req.query.p as string).toLowerCase();
     const numberOfPeriod = req.query.n;
     const CurrentDate = new Date();
+    const limit = req.query.limit as string;
     const year = CurrentDate.getFullYear();
     const month = CurrentDate.getMonth();
-    const date = CurrentDate.getDate();
+    const date = CurrentDate.getDate()
     const userid = new mongoose.Types.ObjectId(req.body.UserId);
 
     if (period === "day" && numberOfPeriod != undefined) {
@@ -96,8 +103,9 @@ export async function getExpenses(req: Request, res: Response) {
       });
       messageCustom(res, OK, "expenses", expenses);
     } else if (period === "recent") {
-      const expenses = await ExpenseModel.find({ userid: userid }).limit(20);
-      messageCustom(res, OK, "expenses", expenses);
+      const expenses = await ExpenseModel.find({ userid: userid });
+      const sortExpenses = expenses.sort((a:any,b:any)=> b.date - a.date).slice(0,(limit!= undefined ? +limit : 19));
+      messageCustom(res, OK, "expenses", sortExpenses);
     } else {
       messageCustom(res, BAD_REQUEST, "not valid query", {});
     }
@@ -143,9 +151,10 @@ export async function getExpenseByMonth(req: Request, res: Response) {
 
 export async function getExpensesActiveSession(req:Request,res:Response) {
     try {
+        const userId = new mongoose.Types.ObjectId(req.body.UserId)
         const MonthSet = new Set<number>();
         const YearSet = new Set<number>();
-        (await ExpenseModel.find({}).select("date")).map(doc =>{
+        (await ExpenseModel.find({userid : userId}).select("date")).map(doc =>{
             MonthSet.add((doc.date.getMonth()));
             YearSet.add((doc.date.getFullYear()));
         });
@@ -164,6 +173,7 @@ export async function getAnalysisOfExpensesByWeek(req: Request, res: Response) {
   try {
     const year = req.query.y as string; // year
     const month = req.query.m as string; // month index
+    const userId = new mongoose.Types.ObjectId(req.body.UserId)
 
     if (year == undefined || month == undefined) {
       messageCustom(res, BAD_REQUEST, "invalid query", {});
@@ -177,13 +187,13 @@ export async function getAnalysisOfExpensesByWeek(req: Request, res: Response) {
     let isEndOfMonth = false;
 
     let FilteredResult = [];
-    console.log(MONTH[+month])
     while (EndDateOfWeek <= EndOfMonth) {
         console.log(StartDateOfWeek,EndDateOfWeek);
       const expenses = await ExpenseModel.find({
         $and: [
           { date: { $gte: StartDateOfWeek.toISOString() } },
           { date: { $lte: EndDateOfWeek.toISOString() } },
+          { userid : { $eq : userId}}
         ],
       }).select(["date", "amount", "cashFlow", "moneyType"]);
       const sorted = expenses.sort((a: any, b: any) => a.date - b.date);
@@ -197,7 +207,9 @@ export async function getAnalysisOfExpensesByWeek(req: Request, res: Response) {
         isEndOfMonth = true
       }
     }
-
+    
+    const userdata= await UserModel.findById(userId).select('balance');
+    let userCurrentBalance = userdata?.balance;
 
     // cleaning and getting desired output
     // getting total_debit, total_credit and current_balance
@@ -209,10 +221,11 @@ export async function getAnalysisOfExpensesByWeek(req: Request, res: Response) {
             if(expense.cashFlow === 'debit') TotalDebit += expense.amount;
             else if(expense.cashFlow === 'credit') TotalCrebit += expense.amount;
         });
+        if(userCurrentBalance != undefined) userCurrentBalance = userCurrentBalance + (TotalCrebit - TotalDebit);
         Result.push({
                 TotalDebit : TotalDebit.toFixed(2),
                 TotalCrebit : TotalCrebit.toFixed(2),
-                CurrentBalance : (TotalCrebit - TotalDebit).toFixed(2)
+                CurrentBalance : userdata?.balance.toFixed(2)
         })
     })
 

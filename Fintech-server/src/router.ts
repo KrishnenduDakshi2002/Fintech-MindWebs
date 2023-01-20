@@ -1,6 +1,6 @@
 import { Request } from "express";
 import * as express from 'express';
-import { LoginController, SignUpController, getUserName, verifyToken } from "./Controllers/auth.controller";
+import { LoginController, SignUpController, getUserDetail, verifyToken } from "./Controllers/auth.controller";
 import UserAuthentication from "./middleware/verifytoken";
 import { addExpense, getAnalysisOfExpensesByWeek, getExpenseByMonth, getExpenses, getExpensesActiveSession } from "./Controllers/expense.controller";
 const router = express.Router();
@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/',(req:Request,res:express.Response)=>{
     res.json('welcome to Fintech REST API');
 })
-router.get('/get/username',[UserAuthentication],getUserName);
+router.get('/get/userdetails',[UserAuthentication],getUserDetail);
 router.get('/verifytoken',[UserAuthentication],verifyToken);
 router.post('/login',LoginController);
 router.post('/signup',SignUpController);
