@@ -223,6 +223,7 @@ async function getMAB(req, res) {
         const StartOfMonth = new Date(+year, +month, 1);
         const NoOfDates = new Date(+year, +month + 1, 0).getDate();
         const StartDateOfNextMonth = new Date(+year, +month + 1, 1);
+        const userId = new mongoose_1.default.Types.ObjectId(req.body.UserId);
         // getting all the document for that month and year
         const expenses = await expense_model_1.ExpenseModel.find({
             $and: [
@@ -231,6 +232,9 @@ async function getMAB(req, res) {
                 },
                 {
                     date: { $lt: StartDateOfNextMonth.toISOString() }
+                },
+                {
+                    userid: userId
                 }
             ]
         });
