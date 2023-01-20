@@ -44,6 +44,9 @@ export const options = {
       type: "linear" as const,
       display: true,
       position: "right" as const,
+      grid: {
+        drawOnChartArea: false,
+      },
     },
     y2: {
       type: "linear" as const,

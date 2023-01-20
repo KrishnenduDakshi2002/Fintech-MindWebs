@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, Navigate, useLocation } from "react-router-dom";
-import Logo from "./assets/logo.png";
+import Logo from "../assets/logo.png";
 import { RxHamburgerMenu } from "react-icons/rx";
 const NavBar = () => {
   const path = useLocation().pathname.split("/")[2];

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { DatePicker } from "./components/DatePicker/DatePicker";
 import { IoCalendarNumber } from "react-icons/io5";
 import { FaAngleDown, FaUsersSlash } from "react-icons/fa";
-import ExpenseListWrapper from "./components/ExpenseList";
-import Card from "./CreditCard";
+import ExpenseListWrapper from "../components/ExpenseList";
+import Card from "../components/CreditCard";
 import axios from "axios";
-import { HOST } from "./Host";
+import { HOST } from "../Host";
+import { Footer } from "../components/Footer";
 
 const Currencies = ["Rupee", "Dollar"];
 const Home = () => {
@@ -18,7 +18,7 @@ const Home = () => {
 
   const UserName = useGetUserData();
   return (
-    <div className="bg-gray-200 h-full grid xl:grid-cols-[3fr_2fr] md:grid-cols-2 md:grid-rows-[1fr_4fr] grid-cols-1 grid-rows-[6 prem_20rem_1fr] gap-2 p-3">
+    <div className="bg-gray-200 h-full grid xl:grid-cols-[3fr_2fr] md:grid-cols-2 md:grid-rows-[1fr_4fr_4rem] grid-cols-1 grid-rows-[6rem_20rem_1fr_4rem] gap-2 p-3">
       {/* child-1 */}
       <div className="flex-center-center ">
         <div className="bg-white rounded-xl h-full w-full grid grid-cols-3">
@@ -45,13 +45,13 @@ const Home = () => {
         </div>
       </div>
       {/* child-2 */}
-      <div className=" row-span-2 h-full overflow-auto">
+      <div className=" md:row-span-2 md:h-full h-[20rem] overflow-auto">
         <ExpenseListWrapper />
       </div>
       {/* child-3 */}
       <div className="bg-white rounded-xl 2xl:px-10 px-5 py-5 grid xl:grid-rows-[15rem_4rem_4rem_5rem] 
       grid-rows-[12rem_12rem_repeat(4,4rem)] xl:grid-cols-2 gap-x-2
-      grid-cols-1 overflow-y-scroll relative overflow-auto scrollbar-hidden">
+      grid-cols-1 scrollbar-hidden">
         <div className="flex-center-center">
           <Card
             isActive={cashFlow === "credit" ? true : false}
@@ -130,6 +130,10 @@ const Home = () => {
             Add
           </button>
         </div>
+      </div>
+      {/* child-4 Footer */}
+      <div className="md:col-span-2">
+          <Footer/>
       </div>
     </div>
   );
