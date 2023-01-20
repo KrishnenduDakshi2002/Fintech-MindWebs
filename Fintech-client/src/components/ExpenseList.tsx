@@ -29,7 +29,7 @@ const ExpenseListWrapper = ({ refresh }: { refresh: boolean }) => {
   const Expenses = useGetExpense(SearchFilterPeriod, SearchFilterNumber, true);
   return (
     <div className="w-full h-full rounded-xl grid grid-rows-[5rem_1fr] bg-white px-4 py-2 relative">
-      <div className="grid grid-flow-col overflow-x-scroll scrollbar-hidden py-2 relative z-20">
+      <div className="grid grid-flow-col gap-x-2 overflow-x-scroll scrollbar-hidden py-2 relative z-20">
         {Filters.map((filter, i) => {
           return (
             <div key={i} className="relative flex-center-center">

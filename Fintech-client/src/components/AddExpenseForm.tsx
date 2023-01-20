@@ -112,7 +112,7 @@ const AddExpenseForm = () => {
             if (DateRef.current) DateRef.current.value = "";
             if (DescriptionRef.current) DescriptionRef.current.value = "";
           }}
-          className="px-[4rem] py-4 bg-blue-400 rounded-2xl hover:scale-105 ease-in-out duration-300"
+          className="px-[4rem] py-3 bg-blue-300 rounded-2xl hover:scale-105 ease-in-out duration-300"
         >
           Add
         </button>

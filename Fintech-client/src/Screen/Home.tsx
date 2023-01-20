@@ -16,7 +16,8 @@ const Home = () => {
   // then continue to this page
   useVerfiyUser();
   return (
-    <div className="bg-gray-200 h-full grid xl:grid-cols-[3fr_2fr] md:grid-cols-2 md:grid-rows-[1fr_4fr_4rem] grid-cols-1 grid-rows-[6rem_20rem_1fr_4rem] gap-2 p-3">
+    <div className="bg-gray-200 h-full grid xl:grid-cols-[3fr_2fr] md:grid-cols-2 md:grid-rows-[10rem_4fr_4rem]
+     grid-cols-1 grid-rows-[8rem_20rem_1fr_4rem] gap-2 p-3">
       {/* child-1 */}
       <div className="flex-center-center ">
         <UserDetails/>

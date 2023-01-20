@@ -15,7 +15,7 @@ const NavBar = () => {
     return <Navigate to={"/login"} />;
   }
   return (
-    <div className="relative">
+    <header className="relative">
       <div className="h-full bg-white flex items-center justify-between relative z-20">
         <div className="h-full flex items-center">
           <div className=" md:ml-10 ml-5 flex-center-center">
@@ -67,7 +67,7 @@ const NavBar = () => {
             active={path === "visualize" ? true : false}
           />
       </div>
-    </div>
+    </header>
   );
 };
 

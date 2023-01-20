@@ -59,20 +59,18 @@ export const options = {
   },
 };
 
-// const labels = ["January", "February", "March", "April", "May", "June", "July"];
-
 export default function LinePlot({
   values,
 }: {
   values: Array<{
     CurrentBalance: string;
-    TotalCrebit: string;
+    TotalCredit: string;
     TotalDebit: string;
   }>;
 }) {
     let total_debit:number[] =[], total_credit:number[] =[],current_balance:number[] = [];
     values.map(val=>{
-        total_credit.push(+val.TotalCrebit);
+        total_credit.push(+val.TotalCredit);
         total_debit.push(+val.TotalDebit);
         current_balance.push(+val.CurrentBalance);
     });

@@ -6,7 +6,7 @@ export const Footer = () => {
       <div className="flex items-center">
         <MdCopyright color='gray' size={22}/>
         <p className='px-5'>2023</p>
-        <p className='pl-10'>Made By FinTech Labs</p>
+        <p className='pl-10'>Made by Krishnendu Dakshi</p>
       </div>
     </div>
   )
